@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Собери подарок ❤️</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1>
 
+<!-- Пазл -->
 <div id="puzzle" class="puzzle"></div>
 
+<!-- Стрелки -->
 <div class="controls">
     <button data-dir="up">⬆️</button>
     <div>
@@ -22,12 +23,12 @@
     </div>
 </div>
 
+<!-- Победа -->
 <div id="winScreen" class="hidden win">
     🎉 Ты заслужила подарок!
 </div>
 
-
-<!-- ====== STAGE 2 ====== -->
+<!-- ===== Stage 2 ===== -->
 <div id="stage2" class="stage hidden">
     <img src="image.jpg" id="bigPhoto">
     <img src="crack.png" id="crack" class="hidden">
@@ -37,6 +38,7 @@
     </div>
 </div>
 
+<!-- Финал -->
 <div id="finalStage" class="stage hidden">
     <div class="finalText">
         ❤️ Она спрятала твой подарок под подушкой<br>
@@ -44,8 +46,7 @@
     </div>
 </div>
 
-
-<!-- АУДИО (ОБЯЗАТЕЛЬНО ВНУТРИ BODY) -->
+<!-- Аудио -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 <audio id="music2" src="music2.mp3"></audio>
 <audio id="music3" src="music3.mp3"></audio>

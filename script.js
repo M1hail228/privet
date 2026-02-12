@@ -19,25 +19,22 @@ let emptyTile;
 let selectedTile = null;
 let hits = 0;
 
-
-/* ========= музыка ========= */
+/* ===== Музыка при первом клике ===== */
 document.body.addEventListener("click", () => {
     bgMusic.play().catch(()=>{});
 }, { once:true });
 
-
-/* ========= создание ========= */
+/* ===== Создание пазла ===== */
 function createPuzzle() {
     for (let i = 0; i < rows*cols-1; i++) {
         const tile = document.createElement("div");
         tile.className = "tile";
 
         const x = i % cols;
-        const y = Math.floor(i/cols);
+        const y = Math.floor(i / cols);
 
         tile.style.backgroundImage = "url(image.jpg)";
-        tile.style.backgroundPosition =
-            `${(x/(cols-1))*100}% ${(y/(rows-1))*100}%`;
+        tile.style.backgroundPosition = `${(x/(cols-1))*100}% ${(y/(rows-1))*100}%`;
 
         tile.dataset.correct = i;
 
@@ -48,106 +45,99 @@ function createPuzzle() {
 
     emptyTile = document.createElement("div");
     emptyTile.className = "tile empty";
-
     tiles.push(emptyTile);
 
     smartShuffle();
     render();
 }
 
-
-/* ========= выбор ========= */
+/* ===== Выбор плитки ===== */
 function select(tile){
-    if(tile===emptyTile) return;
-    selectedTile=tile;
+    if(tile === emptyTile) return;
+    selectedTile = tile;
     render();
 }
 
-
-/* ========= движение ========= */
-buttons.forEach(btn=>{
-    btn.onclick=()=>move(btn.dataset.dir);
+/* ===== Движение ===== */
+buttons.forEach(btn => {
+    btn.onclick = () => move(btn.dataset.dir);
 });
 
 function move(dir){
     if(!selectedTile) return;
 
-    const i=tiles.indexOf(selectedTile);
-    const empty=tiles.indexOf(emptyTile);
+    const i = tiles.indexOf(selectedTile);
+    const empty = tiles.indexOf(emptyTile);
 
-    let target=null;
+    let target = null;
 
-    if(dir==="up") target=i-cols;
-    if(dir==="down") target=i+cols;
-    if(dir==="left") target=i-1;
-    if(dir==="right") target=i+1;
+    if(dir === "up") target = i - cols;
+    if(dir === "down") target = i + cols;
+    if(dir === "left") target = i - 1;
+    if(dir === "right") target = i + 1;
 
-    if(target===empty){
-        [tiles[i],tiles[empty]]=[tiles[empty],tiles[i]];
+    if(target === empty){
+        [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]];
         render();
         checkWin();
     }
 }
 
-
-/* ========= render ========= */
+/* ===== Рендер ===== */
 function render(){
-    puzzle.innerHTML="";
+    puzzle.innerHTML = "";
     tiles.forEach(t=>{
-        t.classList.toggle("active",t===selectedTile);
+        t.classList.toggle("active", t===selectedTile);
         puzzle.appendChild(t);
     });
 }
 
-
-/* ========= легкое перемешивание ========= */
+/* ===== Перемешивание ===== */
 function smartShuffle(){
     for(let k=0;k<15;k++){
-        const empty=tiles.indexOf(emptyTile);
-        const neighbors=getNeighbors(empty);
-        const rand=neighbors[Math.floor(Math.random()*neighbors.length)];
-        [tiles[empty],tiles[rand]]=[tiles[rand],tiles[empty]];
+        const empty = tiles.indexOf(emptyTile);
+        const neighbors = getNeighbors(empty);
+        const rand = neighbors[Math.floor(Math.random()*neighbors.length)];
+        [tiles[empty], tiles[rand]] = [tiles[rand], tiles[empty]];
     }
 }
 
 function getNeighbors(i){
     const n=[];
-    const r=Math.floor(i/cols);
-    const c=i%cols;
+    const r = Math.floor(i / cols);
+    const c = i % cols;
 
-    if(r>0)n.push(i-cols);
-    if(r<rows-1)n.push(i+cols);
-    if(c>0)n.push(i-1);
-    if(c<cols-1)n.push(i+1);
+    if(r>0) n.push(i-cols);
+    if(r<rows-1) n.push(i+cols);
+    if(c>0) n.push(i-1);
+    if(c<cols-1) n.push(i+1);
 
     return n;
 }
 
-
-/* ========= победа ========= */
+/* ===== Проверка победы ===== */
 function checkWin(){
     for(let i=0;i<tiles.length-1;i++){
-        if(+tiles[i].dataset.correct!==i) return;
+        if(+tiles[i].dataset.correct !== i) return;
     }
 
     winScreen.classList.remove("hidden");
     startStage2();
 }
 
-
-/* ========= stage2 ========= */
+/* ===== Stage 2 интерактив ===== */
 function startStage2(){
     bgMusic.pause();
     music2.play();
     stage2.classList.remove("hidden");
 }
 
-bigPhoto.onclick=()=>{
+bigPhoto.onclick = () => {
     hits++;
     crack.classList.remove("hidden");
-    crack.style.opacity=0.3+hits*0.07;
+    crack.style.opacity = 0.3 + hits*0.07;
 
-    if(hits>=10){
+    if(hits >= 10){
         stage2.classList.add("hidden");
         music2.pause();
         music3.play();
@@ -155,5 +145,5 @@ bigPhoto.onclick=()=>{
     }
 };
 
-
+/* ===== Старт игры ===== */
 createPuzzle();
