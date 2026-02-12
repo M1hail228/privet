@@ -1,1 +1,55 @@
-<!DOCTYPE html> <html lang="ru"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /> <title>Собери подарок ❤️</title> <link rel="stylesheet" href="style.css" /> </head> <!-- аудио --> <audio id="bgMusic" src="music.mp3" loop></audio> <audio id="music2" src="music2.mp3"></audio> <audio id="music3" src="music3.mp3"></audio> <!-- экран интерактива --> <div id="stage2" class="stage hidden"> <img src="image.jpg" id="bigPhoto"> <img src="crack.png" id="crack" class="hidden"> <div class="stageText"> Она зажала твой подарок 😈<br> Разбей экран, чтобы забрать его! </div> </div> <div id="finalStage" class="stage hidden"> <div class="finalText"> ❤️ Она спрятала твой подарок под подушкой<br> Посмотри туда ❤️ </div> </div> <body> <h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1> <div id="puzzle" class="puzzle"></div> <!-- стрелки --> <div class="controls"> <button data-dir="up">⬆️</button> <div> <button data-dir="left">⬅️</button> <button data-dir="down">⬇️</button> <button data-dir="right">➡️</button> </div> </div> <div id="winScreen" class="hidden win"> 🎉 Ты заслужила подарок! </div> <script src="script.js"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Собери подарок ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1>
+
+<div id="puzzle" class="puzzle"></div>
+
+<div class="controls">
+    <button data-dir="up">⬆️</button>
+    <div>
+        <button data-dir="left">⬅️</button>
+        <button data-dir="down">⬇️</button>
+        <button data-dir="right">➡️</button>
+    </div>
+</div>
+
+<div id="winScreen" class="hidden win">
+    🎉 Ты заслужила подарок!
+</div>
+
+
+<!-- ====== STAGE 2 ====== -->
+<div id="stage2" class="stage hidden">
+    <img src="image.jpg" id="bigPhoto">
+    <img src="crack.png" id="crack" class="hidden">
+    <div class="stageText">
+        Она зажала твой подарок 😈<br>
+        Разбей экран, чтобы забрать его!
+    </div>
+</div>
+
+<div id="finalStage" class="stage hidden">
+    <div class="finalText">
+        ❤️ Она спрятала твой подарок под подушкой<br>
+        Посмотри туда ❤️
+    </div>
+</div>
+
+
+<!-- АУДИО (ОБЯЗАТЕЛЬНО ВНУТРИ BODY) -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+<audio id="music2" src="music2.mp3"></audio>
+<audio id="music3" src="music3.mp3"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
