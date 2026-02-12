@@ -3,13 +3,14 @@ const cols = 3;
 
 const puzzle = document.getElementById("puzzle");
 const winScreen = document.getElementById("winScreen");
+const buttons = document.querySelectorAll("button[data-dir]");
 
 let tiles = [];
 let emptyIndex;
+let selectedIndex = null;
 
+/* ---------- создание ---------- */
 function createPuzzle() {
-    tiles = [];
-
     for (let i = 0; i < rows * cols - 1; i++) {
         const tile = document.createElement("div");
         tile.className = "tile";
@@ -19,27 +20,77 @@ function createPuzzle() {
 
         tile.style.backgroundImage = "url('image.jpg')";
         tile.style.backgroundPosition =
-            `${(x / (cols - 1)) * 100}% ${(y / (rows - 1)) * 100}%`;
+            `${(x/(cols-1))*100}% ${(y/(rows-1))*100}%`;
 
         tile.dataset.index = i;
 
-        // ✅ только тап/клик
-        tile.addEventListener("pointerdown", () => moveTile(i));
+        tile.addEventListener("click", () => selectTile(i));
 
         tiles.push(tile);
     }
 
     const empty = document.createElement("div");
     empty.className = "tile empty";
-
     tiles.push(empty);
+
     emptyIndex = tiles.length - 1;
 
     smartShuffle();
     render();
 }
 
-/* ---------- гарантированно решаемое перемешивание ---------- */
+/* ---------- выбор плитки ---------- */
+function selectTile(i) {
+    selectedIndex = i;
+    render();
+}
+
+/* ---------- движение через стрелки ---------- */
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        if (selectedIndex === null) return;
+        move(selectedIndex, btn.dataset.dir);
+    });
+});
+
+function move(i, dir) {
+    const row = Math.floor(i / cols);
+    const col = i % cols;
+
+    let target = null;
+
+    if (dir === "up") target = i - cols;
+    if (dir === "down") target = i + cols;
+    if (dir === "left") target = i - 1;
+    if (dir === "right") target = i + 1;
+
+    if (target === emptyIndex) {
+        swap(i, emptyIndex);
+        emptyIndex = i;
+        selectedIndex = target;
+
+        render();
+        checkWin();
+    }
+}
+
+/* ---------- вспомогательные ---------- */
+function swap(a, b) {
+    [tiles[a], tiles[b]] = [tiles[b], tiles[a]];
+}
+
+function render() {
+    puzzle.innerHTML = "";
+
+    tiles.forEach((t, i) => {
+        if (i === selectedIndex) t.classList.add("active");
+        else t.classList.remove("active");
+
+        puzzle.appendChild(t);
+    });
+}
+
+/* ---------- перемешивание ---------- */
 function smartShuffle() {
     for (let i = 0; i < 150; i++) {
         const neighbors = getNeighbors(emptyIndex);
@@ -49,42 +100,20 @@ function smartShuffle() {
     }
 }
 
-/* ---------- соседние клетки ---------- */
 function getNeighbors(i) {
+    const n = [];
     const row = Math.floor(i / cols);
     const col = i % cols;
 
-    const neighbors = [];
+    if (row > 0) n.push(i - cols);
+    if (row < rows - 1) n.push(i + cols);
+    if (col > 0) n.push(i - 1);
+    if (col < cols - 1) n.push(i + 1);
 
-    if (row > 0) neighbors.push(i - cols);
-    if (row < rows - 1) neighbors.push(i + cols);
-    if (col > 0) neighbors.push(i - 1);
-    if (col < cols - 1) neighbors.push(i + 1);
-
-    return neighbors;
+    return n;
 }
 
-function swap(a, b) {
-    [tiles[a], tiles[b]] = [tiles[b], tiles[a]];
-}
-
-function render() {
-    puzzle.innerHTML = "";
-    tiles.forEach(t => puzzle.appendChild(t));
-}
-
-/* ---------- движение ---------- */
-function moveTile(i) {
-    if (getNeighbors(emptyIndex).includes(i)) {
-        swap(i, emptyIndex);
-        emptyIndex = i;
-
-        render();
-        checkWin();
-    }
-}
-
-/* ---------- проверка победы ---------- */
+/* ---------- победа ---------- */
 function checkWin() {
     for (let i = 0; i < tiles.length - 1; i++) {
         if (+tiles[i].dataset.index !== i) return;
