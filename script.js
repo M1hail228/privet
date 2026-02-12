@@ -3,15 +3,19 @@ const cols = 3;
 
 const puzzle = document.getElementById("puzzle");
 const winScreen = document.getElementById("winScreen");
-const buttons = document.querySelectorAll("button[data-dir]");
+const buttons = document.querySelectorAll("[data-dir]");
 
-let tiles = [];
-let emptyIndex;
-let selectedIndex = null;
+let tiles = [];        // массив DOM-элементов
+let emptyTile;         // ссылка на пустую клетку
+let selectedTile = null;
 
-/* ---------- создание ---------- */
+
+/* ===================== СОЗДАНИЕ ===================== */
+
 function createPuzzle() {
-    for (let i = 0; i < rows * cols - 1; i++) {
+    const total = rows * cols;
+
+    for (let i = 0; i < total - 1; i++) {
         const tile = document.createElement("div");
         tile.className = "tile";
 
@@ -19,41 +23,51 @@ function createPuzzle() {
         const y = Math.floor(i / cols);
 
         tile.style.backgroundImage = "url('image.jpg')";
+        tile.style.backgroundSize = "300% 400%";
         tile.style.backgroundPosition =
             `${(x/(cols-1))*100}% ${(y/(rows-1))*100}%`;
 
-        tile.dataset.index = i;
+        tile.dataset.correct = i; // правильная позиция
 
-        tile.addEventListener("click", () => selectTile(i));
+        tile.onclick = () => select(tile);
 
         tiles.push(tile);
     }
 
-    const empty = document.createElement("div");
-    empty.className = "tile empty";
-    tiles.push(empty);
+    emptyTile = document.createElement("div");
+    emptyTile.className = "tile empty";
 
-    emptyIndex = tiles.length - 1;
+    tiles.push(emptyTile);
 
     smartShuffle();
     render();
 }
 
-/* ---------- выбор плитки ---------- */
-function selectTile(i) {
-    selectedIndex = i;
+
+/* ===================== ВЫБОР ===================== */
+
+function select(tile) {
+    if (tile === emptyTile) return;
+
+    selectedTile = tile;
     render();
 }
 
-/* ---------- движение через стрелки ---------- */
-buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        if (selectedIndex === null) return;
-        move(selectedIndex, btn.dataset.dir);
-    });
-});
 
-function move(i, dir) {
+/* ===================== ДВИЖЕНИЕ ===================== */
+
+buttons.forEach(btn =>
+    btn.onclick = () => {
+        if (!selectedTile) return;
+        move(btn.dataset.dir);
+    }
+);
+
+
+function move(dir) {
+    const i = tiles.indexOf(selectedTile);
+    const empty = tiles.indexOf(emptyTile);
+
     const row = Math.floor(i / cols);
     const col = i % cols;
 
@@ -64,39 +78,36 @@ function move(i, dir) {
     if (dir === "left") target = i - 1;
     if (dir === "right") target = i + 1;
 
-    if (target === emptyIndex) {
-        swap(i, emptyIndex);
-        emptyIndex = i;
-        selectedIndex = target;
-
+    // можно двигать только если цель = пустая
+    if (target === empty) {
+        [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]];
         render();
         checkWin();
     }
 }
 
-/* ---------- вспомогательные ---------- */
-function swap(a, b) {
-    [tiles[a], tiles[b]] = [tiles[b], tiles[a]];
-}
+
+/* ===================== РЕНДЕР ===================== */
 
 function render() {
     puzzle.innerHTML = "";
 
-    tiles.forEach((t, i) => {
-        if (i === selectedIndex) t.classList.add("active");
-        else t.classList.remove("active");
-
+    tiles.forEach(t => {
+        t.classList.toggle("active", t === selectedTile);
         puzzle.appendChild(t);
     });
 }
 
-/* ---------- перемешивание ---------- */
+
+/* ===================== ПЕРЕМЕШИВАНИЕ ===================== */
+
 function smartShuffle() {
-    for (let i = 0; i < 150; i++) {
-        const neighbors = getNeighbors(emptyIndex);
-        const rand = neighbors[Math.floor(Math.random() * neighbors.length)];
-        swap(rand, emptyIndex);
-        emptyIndex = rand;
+    for (let k = 0; k < 150; k++) {
+        const empty = tiles.indexOf(emptyTile);
+        const neighbors = getNeighbors(empty);
+        const rand = neighbors[Math.floor(Math.random()*neighbors.length)];
+
+        [tiles[empty], tiles[rand]] = [tiles[rand], tiles[empty]];
     }
 }
 
@@ -106,20 +117,25 @@ function getNeighbors(i) {
     const col = i % cols;
 
     if (row > 0) n.push(i - cols);
-    if (row < rows - 1) n.push(i + cols);
+    if (row < rows-1) n.push(i + cols);
     if (col > 0) n.push(i - 1);
-    if (col < cols - 1) n.push(i + 1);
+    if (col < cols-1) n.push(i + 1);
 
     return n;
 }
 
-/* ---------- победа ---------- */
+
+/* ===================== ПОБЕДА ===================== */
+
 function checkWin() {
     for (let i = 0; i < tiles.length - 1; i++) {
-        if (+tiles[i].dataset.index !== i) return;
+        if (+tiles[i].dataset.correct !== i) return;
     }
 
     winScreen.classList.remove("hidden");
 }
+
+
+/* ===================== СТАРТ ===================== */
 
 createPuzzle();
