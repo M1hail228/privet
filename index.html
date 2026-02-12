@@ -2,24 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Собери подарок ❤️</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h1 class="title">Собери картинку 💌</h1>
+<h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1>
 
-<!-- поле сборки -->
-<div class="board" id="board"></div>
+<div id="puzzle" class="puzzle"></div>
 
-<p class="hint">Нажимай на кусочки снизу, чтобы собрать картинку</p>
+<!-- стрелки -->
+<div class="controls">
+    <button data-dir="up">⬆️</button>
+    <div>
+        <button data-dir="left">⬅️</button>
+        <button data-dir="down">⬇️</button>
+        <button data-dir="right">➡️</button>
+    </div>
+</div>
 
-<!-- кусочки -->
-<div class="pieces" id="pieces"></div>
-
-<div id="win" class="win hidden">
-    🎉 Поздравляю! Подарок заслужен ❤️
+<div id="winScreen" class="hidden win">
+    🎉 Ты заслужила подарок!
 </div>
 
 <script src="script.js"></script>

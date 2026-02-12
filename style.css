@@ -1,68 +1,74 @@
-body {
+html, body {
     margin: 0;
+    padding: 0;
+    overflow: hidden;
     background: #111;
-    color: white;
     font-family: Arial, sans-serif;
+    color: white;
     text-align: center;
 }
 
-/* заголовок */
+/* ---------- заголовок ---------- */
 .title {
     margin-top: 15px;
+    font-size: 18px;
 }
 
-/* поле сборки */
-.board {
+/* ---------- поле ---------- */
+.puzzle {
     width: 92vw;
     max-width: 380px;
     aspect-ratio: 3/4;
-
     margin: 20px auto;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 4px;
+
+    user-select: none;
 }
 
-.slot {
-    border: 2px dashed #333;
-    border-radius: 8px;
-}
-
-/* кусочки */
-.pieces {
-    width: 92vw;
-    max-width: 380px;
-
-    margin: 15px auto;
-
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 4px;
-}
-
+/* ---------- плитки ---------- */
 .tile {
-    aspect-ratio: 1;
     background-size: 300% 400%;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.15s;
 }
 
-.tile:active {
+.tile.active {
+    outline: 4px solid #ff69b4;
     transform: scale(0.95);
 }
 
-.hint {
-    font-size: 14px;
-    opacity: 0.7;
+.empty {
+    background: transparent;
 }
 
-/* победа */
+/* ---------- стрелки ---------- */
+.controls {
+    margin-top: 10px;
+}
+
+.controls button {
+    font-size: 28px;
+    padding: 12px 18px;
+    margin: 5px;
+    border-radius: 12px;
+    border: none;
+    background: #222;
+    color: white;
+}
+
+.controls button:active {
+    transform: scale(0.9);
+}
+
+/* ---------- победа ---------- */
 .win {
+    margin-top: 20px;
     font-size: 22px;
     color: #ff69b4;
-    margin: 20px;
 }
 
 .hidden {
