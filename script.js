@@ -102,7 +102,7 @@ function render() {
 /* ===================== ПЕРЕМЕШИВАНИЕ ===================== */
 
 function smartShuffle() {
-    for (let k = 0; k < 20; k++) {
+    for (let k = 0; k < 40; k++) {
         const empty = tiles.indexOf(emptyTile);
         const neighbors = getNeighbors(empty);
         const rand = neighbors[Math.floor(Math.random()*neighbors.length)];
