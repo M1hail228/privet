@@ -74,3 +74,49 @@ html, body {
 .hidden {
     display: none;
 }
+
+/* ===== stage overlay ===== */
+
+.stage {
+    position: fixed;
+    inset: 0;
+    background: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.stage img {
+    width: 90vw;
+    max-width: 420px;
+    border-radius: 14px;
+}
+
+.stageText {
+    margin-top: 20px;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
+#crack {
+    position: absolute;
+    width: 90vw;
+    max-width: 420px;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.finalText {
+    font-size: 26px;
+    padding: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

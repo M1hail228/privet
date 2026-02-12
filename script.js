@@ -139,3 +139,60 @@ function checkWin() {
 /* ===================== СТАРТ ===================== */
 
 createPuzzle();
+
+/* ===================== МУЗЫКА ===================== */
+
+const bgMusic = document.getElementById("bgMusic");
+const music2 = document.getElementById("music2");
+const music3 = document.getElementById("music3");
+
+document.body.addEventListener("click", () => {
+    bgMusic.play().catch(()=>{});
+}, { once: true });
+
+
+/* ===================== STAGE 2 ===================== */
+
+const stage2 = document.getElementById("stage2");
+const finalStage = document.getElementById("finalStage");
+const bigPhoto = document.getElementById("bigPhoto");
+const crack = document.getElementById("crack");
+
+let hits = 0;
+
+
+/* 🔥 МОДИФИЦИРУЕМ checkWin */
+const oldCheckWin = checkWin;
+
+checkWin = function() {
+    oldCheckWin();
+
+    if (!win.classList.contains("hidden")) {
+        startStage2();
+    }
+};
+
+
+function startStage2() {
+    bgMusic.pause();
+    music2.play();
+
+    stage2.classList.remove("hidden");
+}
+
+
+bigPhoto.onclick = () => {
+    hits++;
+
+    crack.classList.remove("hidden");
+
+    crack.style.opacity = 0.3 + hits * 0.07;
+
+    if (hits >= 10) {
+        stage2.classList.add("hidden");
+        music2.pause();
+        music3.play();
+        finalStage.classList.remove("hidden");
+    }
+};
+
