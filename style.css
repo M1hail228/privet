@@ -1,7 +1,11 @@
-body {
+html, body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;          /* 🚫 отключает прокрутку */
+    touch-action: manipulation; /* 🚫 отключает системные жесты */
     background: #111;
+    font-family: Arial, sans-serif;
     color: white;
     text-align: center;
 }
@@ -12,22 +16,31 @@ body {
 }
 
 .puzzle {
-    width: 90vw;
-    max-width: 360px;
+    width: 92vw;
+    max-width: 380px;
     aspect-ratio: 3 / 4;
     margin: 30px auto;
+
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 3px;
+    gap: 4px;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .tile {
     background-size: 300% 400%;
-    background-repeat: no-repeat;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.15s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.12s ease;
 }
 
 .tile:active {
