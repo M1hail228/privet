@@ -6,12 +6,28 @@
     <title>Собери подарок ❤️</title>
     <link rel="stylesheet" href="style.css" />
 </head>
-<!-- аудио -->
-<audio id="bgMusic" src="music.mp3" loop></audio>
-<audio id="music2" src="music2.mp3"></audio>
-<audio id="music3" src="music3.mp3"></audio>
 
-<!-- экран интерактива -->
+<body>
+
+<h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1>
+
+<div id="puzzle" class="puzzle"></div>
+
+<div class="controls">
+    <button data-dir="up">⬆️</button>
+    <div>
+        <button data-dir="left">⬅️</button>
+        <button data-dir="down">⬇️</button>
+        <button data-dir="right">➡️</button>
+    </div>
+</div>
+
+<div id="winScreen" class="hidden win">
+    🎉 Ты заслужила подарок!
+</div>
+
+
+<!-- ====== STAGE 2 ====== -->
 <div id="stage2" class="stage hidden">
     <img src="image.jpg" id="bigPhoto">
     <img src="crack.png" id="crack" class="hidden">
@@ -28,25 +44,11 @@
     </div>
 </div>
 
-<body>
 
-<h1 class="title">Выбери плитку и передвинь стрелками ❤️</h1>
-
-<div id="puzzle" class="puzzle"></div>
-
-<!-- стрелки -->
-<div class="controls">
-    <button data-dir="up">⬆️</button>
-    <div>
-        <button data-dir="left">⬅️</button>
-        <button data-dir="down">⬇️</button>
-        <button data-dir="right">➡️</button>
-    </div>
-</div>
-
-<div id="winScreen" class="hidden win">
-    🎉 Ты заслужила подарок!
-</div>
+<!-- АУДИО (ОБЯЗАТЕЛЬНО ВНУТРИ BODY) -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+<audio id="music2" src="music2.mp3"></audio>
+<audio id="music3" src="music3.mp3"></audio>
 
 <script src="script.js"></script>
 </body>

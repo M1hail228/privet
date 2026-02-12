@@ -1,82 +1,57 @@
 html, body {
     margin: 0;
-    padding: 0;
     overflow: hidden;
     background: #111;
-    font-family: Arial, sans-serif;
     color: white;
+    font-family: Arial;
     text-align: center;
 }
 
-/* ---------- заголовок ---------- */
-.title {
-    margin-top: 15px;
-    font-size: 18px;
-}
-
-/* ---------- поле ---------- */
+/* поле */
 .puzzle {
     width: 92vw;
     max-width: 380px;
     aspect-ratio: 1/1;
+
     margin: 20px auto;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr); /* ✅ исправлено */
     gap: 4px;
-
-    user-select: none;
 }
 
-/* ---------- плитки ---------- */
 .tile {
-    background-size: 300% 400%;
+    background-size: 300% 300%;
     border-radius: 10px;
-    transition: 0.15s;
 }
 
 .tile.active {
-    outline: 4px solid #ff69b4;
-    transform: scale(0.95);
+    outline: 4px solid hotpink;
 }
 
 .empty {
     background: transparent;
 }
 
-/* ---------- стрелки ---------- */
-.controls {
-    margin-top: 10px;
-}
-
+/* стрелки */
 .controls button {
     font-size: 28px;
-    padding: 12px 18px;
-    margin: 5px;
-    border-radius: 12px;
-    border: none;
-    background: #222;
-    color: white;
+    margin: 6px;
+    padding: 10px 18px;
 }
 
-.controls button:active {
-    transform: scale(0.9);
-}
-
-/* ---------- победа ---------- */
+/* победа */
 .win {
-    margin-top: 20px;
-    font-size: 22px;
-    color: #ff69b4;
+    color: hotpink;
+    margin-top: 10px;
 }
 
 .hidden {
     display: none;
 }
 
-/* ===== stage overlay ===== */
-
+/* ===== overlays ===== */
 .stage {
     position: fixed;
     inset: 0;
@@ -93,30 +68,19 @@ html, body {
 .stage img {
     width: 90vw;
     max-width: 420px;
-    border-radius: 14px;
 }
 
 .stageText {
     margin-top: 20px;
     font-size: 20px;
-    color: white;
-    text-align: center;
 }
 
 #crack {
     position: absolute;
-    width: 90vw;
-    max-width: 420px;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0.8;
 }
 
 .finalText {
     font-size: 26px;
-    padding: 20px;
-    text-align: center;
-}
-
-.hidden {
-    display: none;
 }
