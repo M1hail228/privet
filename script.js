@@ -23,7 +23,7 @@ function createPuzzle() {
         const y = Math.floor(i / cols);
 
         tile.style.backgroundImage = "url('image.jpg')";
-        tile.style.backgroundSize = "300% 400%";
+        tile.style.backgroundSize = "300% 300%";
         tile.style.backgroundPosition =
             `${(x/(cols-1))*100}% ${(y/(rows-1))*100}%`;
 
