@@ -1,4 +1,4 @@
-const rows = 4;
+const rows = 3;
 const cols = 3;
 
 const puzzle = document.getElementById("puzzle");
