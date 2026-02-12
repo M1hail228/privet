@@ -116,14 +116,23 @@ function getNeighbors(i){
 }
 
 /* ===== Проверка победы ===== */
+let stage2Started = false; // новая переменная
+
 function checkWin(){
     for(let i=0;i<tiles.length-1;i++){
-        if(+tiles[i].dataset.correct !== i) return;
+        if(+tiles[i].dataset.correct !== i) return; // ещё не выиграли
     }
 
+    // показываем победный экран
     winScreen.classList.remove("hidden");
-    startStage2();
+
+    // запускаем Stage 2 только один раз
+    if(!stage2Started){
+        stage2Started = true;
+        setTimeout(startStage2, 800); // небольшой таймаут 0.8с для плавности
+    }
 }
+
 
 /* ===== Stage 2 интерактив ===== */
 function startStage2(){
