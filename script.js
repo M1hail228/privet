@@ -108,7 +108,7 @@ function render(){
 /* ========= shuffle ========= */
 function smartShuffle(){
     do{
-        for(let k=0;k<30;k++){
+        for(let k=0;k<20;k++){
             const empty = tiles.indexOf(emptyTile);
             const neighbors = getNeighbors(empty);
             const rand = neighbors[Math.floor(Math.random()*neighbors.length)];
