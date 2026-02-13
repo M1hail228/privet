@@ -66,9 +66,14 @@ html, body {
     color: #ff69b4;
 }
 
-.hidden {
-    display: none;
+.stage.hidden {
+    display: none !important;
 }
+
+.hidden {
+    display: none !important;
+}
+
 
 /* Stage overlay */
 .stage {
